@@ -11,4 +11,17 @@
         android:hint="@string/add_message"
         android:inputType="text"
         android:autofillHints="" />
+
+    <Spinner
+        android:id="@+id/setMonth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/month_array" />
+
+    <Spinner
+        android:id="@+id/setDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/thirty_day_array" />
+
 </LinearLayout>

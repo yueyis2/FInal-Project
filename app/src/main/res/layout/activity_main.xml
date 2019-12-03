@@ -8,11 +8,20 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/dateBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="15"
+        android:gravity="center"
+        android:text="time"
+        android:textSize="30sp" />
+
     <ScrollView
         android:id="@+id/toDoContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="2">
 
         <LinearLayout
             android:id="@+id/itemContainer"
