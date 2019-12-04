@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 adjustDay(setMonth.getSelectedItemPosition(), container);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
