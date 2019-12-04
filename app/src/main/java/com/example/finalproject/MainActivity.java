@@ -33,8 +33,12 @@ public class MainActivity extends AppCompatActivity {
         final Button add = findViewById(R.id.add);
         final Button finish = findViewById(R.id.finish);
         Calendar calendar = Calendar.getInstance();
-        String mMonth = month(calendar.get(Calendar.MONTH));
-        String mDay = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        final String mMonth = month(calendar.get(Calendar.MONTH));
+        String nDay = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        if (nDay.length() < 2) {
+            nDay = "0" + nDay;
+        }
+        final String mDay = nDay;
         String mWay = String.valueOf(calendar.get(Calendar.DAY_OF_WEEK));
         String toShow = mMonth + "/" + mDay + ", ";
         if ("1".equals(mWay)) {
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
             itemList.add(toAdd);
             doneList.add(toAdd.findViewById(R.id.done));
             deleteList.add(toAdd.findViewById(R.id.delete));
+            ((TextView) toAdd.findViewById(R.id.day)).setText(mDay);
+            ((TextView) toAdd.findViewById(R.id.month)).setText(mMonth);
             changeText(toAdd.findViewById(R.id.content), toAdd.findViewById(R.id.month), toAdd.findViewById(R.id.day), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH) - 1);
             updateDisplay();
         });
@@ -195,9 +201,6 @@ public class MainActivity extends AppCompatActivity {
                 textView.setTextColor(Color.BLACK);
                 String month1 = month(setMonth.getSelectedItemPosition());
                 String day1 = "" + (setDay.getSelectedItemPosition() + 1);
-                if(month1.length() < 2) {
-                    month1 = "0" + month1;
-                }
                 if(day1.length() < 2) {
                     day1 = "0" + day1;
                 }
