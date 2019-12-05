@@ -17,6 +17,16 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,16 +85,53 @@ public class MainActivity extends AppCompatActivity {
                     allDone = false;
                 }
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             if (allDone) {
-                builder.setMessage("Good job! You have finished all your to-do today!");
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                JsonObjectRequest objectRequest = new JsonObjectRequest(
+                        Request.Method.GET,
+                        "http://yerkee.com/api/fortune",
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    builder.setMessage("Good job! You have finished all your to-do today!\nThis is your fortune today:\n" + response.getString("fortune"));
+                                    builder.show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                builder.setMessage("Error");
+                                builder.show();
+                            }
+                        });
+                requestQueue.add(objectRequest);
             } else {
                 builder.setMessage("Oh no! You have not done yet! Try to click finish after finishing all your to-do.");
+                builder.show();
             }
-            builder.show();
         });
-
     }
+    /*private String retrieveFortune() {
+        String url = "http://yerkee.com/api/fortune";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final String toReturn = "";
+        JsonObjectRequest objectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                return response.toString();
+            }
+        })
+    }*/
     private static String month(int m) {
         if (m == 0) {
             return "Jan";
